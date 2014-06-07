@@ -1,0 +1,7 @@
+#!/usr/bin/python
+
+from spam import spam
+import sys
+
+c = spam()
+c(sys.argv)
