@@ -12,5 +12,6 @@ setup(
 	])],
 	install_requires=[
 		'simpleCLI',
+		#'GitPython>=0.3',
 	],
 )

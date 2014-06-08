@@ -3,35 +3,75 @@ import json
 from pprint import pprint
 import subprocess
 
-class can(object):
-	def __init__(self, location):
-		self.location = self.test_location(location)
-		with open(self.location) as canfile:
-			info = json.load(canfile) 
-		
-		brand = getattr(__import__(info["brand"], globals(), locals(), [info["brand"]]), info["brand"])
-		self.product = brand(**info["product"])
+class Can(object):
+	def __init__(self, location=None):
+		self.location = location
+		if location:
+			self.name = os.path.basename(location)
 
 	def install(self):
 		self.product.install()
-	
-	def remove(self):	
+
+	def remove(self):
 		self.product.remove()
 
-	def test_location(self, location):
+
+	def to_hash():
+		return info
+
+	def save():
+		to_hash()
+
+	def clone(self, clone_location):
+		other = Can.from_hash(self.to_hash())
+		other.location = clone_location + self.name
+
+	def destroy(self):
+		os.path.remove(self.location)
+
+	@staticmethod
+	def from_hash(info):
+		instance = Can()
+
+
+		brand = getattr(__import__(info["brand"], globals(), locals(), [info["brand"]]), info["brand"])
+		instance.product = brand(**info["product"])
+		return instance
+
+
+	@staticmethod
+	def load(location):
+
 		paths = [
-			location, 
+			location,
 			location+".can",
-			os.path.join(os.path.expanduser("~/.cans/"),location),
-			os.path.join(os.path.expanduser("~/.cans/"),location+".can"),
+			os.path.join(os.path.realpath("./.shelf/"),location),
+			os.path.join(os.path.realpath("./.shelf/"),location+".can"),
+			os.path.join(os.path.realpath("~/.shelf/"),location),
+			os.path.join(os.path.realpath("~/.shelf/"),location+".can"),
+
 		]
 		result = None
-		
+
 		for path in paths:
+			print path
 			if os.path.exists(path):
 				result = path
+				break
 
 		if result:
-			return result
+			with open(result) as canfile:
+				info = json.load(canfile)
+			can = Can.from_hash(info)
+			can.location = location
+			can.name = os.path.basename(location)
+			return can
+
+
 		else:
-			print "No canfile found for:",location
+			raise Exception("No canfile found for:", location)
+
+
+
+
+
