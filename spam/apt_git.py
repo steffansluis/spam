@@ -1,4 +1,4 @@
-class git(object):
+class apt_git(object):
 	def __init__(self, repo):
 		self.repo = repo
 		pass

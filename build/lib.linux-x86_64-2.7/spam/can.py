@@ -16,15 +16,17 @@ class Can(object):
 		self.product.remove()
 
 
-	def to_hash():
+	def to_hash(self):
 		return info
 
-	def save():
-		to_hash()
+	def save(self):
+		can = self.to_hash()
+		
 
-	def clone(self, clone_location):
+	def clone(self):
 		other = Can.from_hash(self.to_hash())
-		other.location = clone_location + self.name
+		other.location = self.location
+		return other
 
 	def destroy(self):
 		os.path.remove(self.location)

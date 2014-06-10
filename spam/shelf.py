@@ -8,7 +8,7 @@ class Shelf(object):
 		self.repo = Repo(shelfdir)
 
 	def store(self, can):
-		c = can.clone()
+		can.clone()
 		c.save(self.shelfdir)
 
 	def clone(self, can, clone_location):

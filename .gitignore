@@ -1,0 +1,4 @@
+*.pyc
+spam.egg-info/*
+dist/*
+build/*
