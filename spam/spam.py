@@ -17,22 +17,29 @@ class spam(simpleCLI):
 		print "This canopener is fully operational."
 
 	@cli_command
-	def install(self,canstring):
-		print "Installing can:",canstring
-		c = Can.load(canstring)
+	def install(self,can_location):
+		print "Installing can:",can_location
+		c = Can.load(can_location)
 
 		c.install()
 
 	@cli_command
-	def remove(self,canstring):
-		print "Removing can:",canstring
-		c = Can.load(canstring)
+	def remove(self,can_location):
+		print "Removing can:",can_location
+		c = Can.load(can_location)
 
 		c.remove()
 
 	@cli_command
-	def register(self, canstring, shelfstring = "~/.shelf/"):
-		c = Can.load(canstring)
-		s = Shelf.load(shelfstring)
+	def register(self, can_location, shelf_location = None):
+		c = Can.load(can_location)
+		s = Shelf.load(shelf_location)
 		s.store(c)
+
+	@cli_command
+	def can(protocol = None, name = None, shelve = None):
+		if not(protocol):
+
+
+
 

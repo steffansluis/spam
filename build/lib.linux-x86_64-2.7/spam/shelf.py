@@ -8,8 +8,8 @@ class Shelf(object):
 		self.repo = Repo(shelfdir)
 
 	def store(self, can):
-		can.clone()
-		c.save(self.shelfdir)
+		c = can.clone()
+		c.save(os.path.join(self.shelfdir,can.name+".can"))
 
 	def clone(self, can, clone_location):
 		other = Can.from_hash(self.to_hash())
@@ -44,6 +44,10 @@ class Shelf(object):
 
 	@staticmethod
 	def load(location):
+		# This is ugly but can't be done by default value of the argument because the default value of the argument of another function passing it to this one
+		# will override it
+		if not(location):
+			location = "."
 
 		paths = [
 			os.path.realpath(os.path.expanduser(location)),

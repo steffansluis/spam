@@ -17,11 +17,13 @@ class Can(object):
 
 
 	def to_hash(self):
-		return info
+		return {"brand" : self.brand, "product" : self.product.to_hash()}
 
-	def save(self):
+	def save(self, location):
 		can = self.to_hash()
-		
+		print "Saving to", location
+		with open(location,"w") as canfile:
+			json.dump(can, canfile, indent=True)
 
 	def clone(self):
 		other = Can.from_hash(self.to_hash())
@@ -37,6 +39,7 @@ class Can(object):
 
 
 		brand = getattr(__import__(info["brand"], globals(), locals(), [info["brand"]]), info["brand"])
+		instance.brand = info["brand"]
 		instance.product = brand(**info["product"])
 		return instance
 
